@@ -1,0 +1,251 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="SQL Server Scripts for 1C">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="CUP-DB:DELLIN\mgrebenchuk">
+          <Created>2016-02-24T14:33:25.864414+03:00</Created>
+          <Type>SQL</Type>
+          <Server>CUP-DB</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB>empty_gp</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="Cup-db\sql2012:DELLIN\mgrebenchuk">
+          <Created>2015-01-12T19:14:05.8555198+03:00</Created>
+          <Type>SQL</Type>
+          <Server>Cup-db\sql2012</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB>empty_gp</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="m1-cup:DELLIN\mgrebenchuk">
+          <Created>2015-05-20T17:28:12.7262867+03:00</Created>
+          <Type>SQL</Type>
+          <Server>m1-cup</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="m1-gp-db,1433:DELLIN\mgrebenchuk">
+          <Created>2015-01-13T10:34:45.3691446+03:00</Created>
+          <Type>SQL</Type>
+          <Server>m1-gp-db,1433</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="m1-gp-db:DELLIN\mgrebenchuk">
+          <Created>2015-01-22T18:31:36.5795816+03:00</Created>
+          <Type>SQL</Type>
+          <Server>m1-gp-db</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB>master</InitialDB>
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="m1-rdb-db:DELLIN\mgrebenchuk">
+          <Created>2015-07-27T12:08:07.0284346+03:00</Created>
+          <Type>SQL</Type>
+          <Server>m1-rdb-db</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="m1-rep-db:DELLIN\mgrebenchuk">
+          <Created>2015-01-23T11:09:43.4445017+03:00</Created>
+          <Type>SQL</Type>
+          <Server>m1-rep-db</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="spss:DELLIN\mgrebenchuk">
+          <Created>2015-02-05T10:41:35.5211386+03:00</Created>
+          <Type>SQL</Type>
+          <Server>spss</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="st-db1:DELLIN\mgrebenchuk">
+          <Created>2015-01-27T11:36:52.7707719+03:00</Created>
+          <Type>SQL</Type>
+          <Server>st-db1</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="st-db2:DELLIN\mgrebenchuk">
+          <Created>2015-01-28T10:24:44.0742809+03:00</Created>
+          <Type>SQL</Type>
+          <Server>st-db2</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="Dm_io_virtual_file_stats.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Dm_io_virtual_file_stats.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Extended Events_Заливка из трассы расширенных событий в таблицу.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:CUP-DB:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>CUP-DB</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Extended Events_Заливка из трассы расширенных событий в таблицу.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Extended Events_Приведение текстов запросов.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Cup-db\sql2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Cup-db\sql2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Extended Events_Приведение текстов запросов.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Open transactions with text and plans.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:m1-gp-db:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>m1-gp-db</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Open transactions with text and plans.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Plan guide_Набор запросов для работы.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:m1-gp-db:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>m1-gp-db</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Plan guide_Набор запросов для работы.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Анализ блокировок.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Cup-db\sql2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Cup-db\sql2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Анализ блокировок.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Анализ выполнения заданий msx.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Cup-db\sql2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Cup-db\sql2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Анализ выполнения заданий msx.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Анализ ожиданий (ресурсы и процессор).sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:m1-gp-db:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>m1-gp-db</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Анализ ожиданий (ресурсы и процессор).sql</FullPath>
+        </FileNode>
+        <FileNode Name="Анализ состояния пересчета статистик.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Cup-db\sql2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Cup-db\sql2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Анализ состояния пересчета статистик.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Длительные транзакции.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:m1-gp-db:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>m1-gp-db</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Длительные транзакции.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Обновление статистик.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Cup-db\sql2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Cup-db\sql2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Обновление статистик.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Отсутствующие индексы.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:m1-rdb-db:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>m1-rdb-db</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Отсутствующие индексы.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Работа с процедурным кэшем.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:m1-gp-db:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>m1-gp-db</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Работа с процедурным кэшем.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Ресурсоемкие запросы.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:spss:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>spss</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Ресурсоемкие запросы.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Текущие запросы.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:m1-gp-db:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>m1-gp-db</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Текущие запросы.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Текущие процессы.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:m1-rep-db:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>m1-rep-db</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Текущие процессы.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Удаление тяжелых запросов.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:Cup-db\sql2012:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>Cup-db\sql2012</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Удаление тяжелых запросов.sql</FullPath>
+        </FileNode>
+        <FileNode Name="Хинт. Ускорение запроса по статистике.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:st-db1:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>st-db1</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>Хинт. Ускорение запроса по статистике.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items>
+        <FileNode Name="Ссылки">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Ссылки</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

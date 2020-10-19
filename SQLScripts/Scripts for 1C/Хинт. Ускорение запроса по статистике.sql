@@ -1,0 +1,1 @@
+SELECT * FROM sys.dm_db_index_physical_stats(DB_ID(N'gp_work'), null, null, null, 'LIMITED') -- для ускорения вывода Управления созданными индексами

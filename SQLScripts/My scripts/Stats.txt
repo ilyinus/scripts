@@ -1,0 +1,39 @@
+USE erp;
+SET NOCOUNT ON;                   -- отключаем вывод количества возвращаемых строк, это несколько ускорит обработку
+DECLARE @table_name nvarchar(50); -- имя пользовательской таблицы
+DECLARE @command nvarchar(4000);  -- инструкция T-SQL для дефрагментации либо ренидексации
+DECLARE @maxdop int;              -- число потоков
+
+SET @maxdop = 24; -- выставим не больше, чем ядер в одной NUMA ноде
+
+SELECT
+OBJECT_NAME(object_id) AS tablename
+INTO #tables
+FROM
+sys.tables;
+
+DECLARE tables CURSOR FOR SELECT tablename FROM #tables;
+
+-- Открытие курсора
+OPEN tables;
+
+WHILE (1=1)
+    BEGIN
+        FETCH NEXT
+           FROM tables
+           INTO @table_name;
+        IF @@FETCH_STATUS < 0 BREAK;
+		
+		SET @command = N'UPDATE STATISTICS ' + @table_name + N' WITH FULLSCAN, COLUMNS, MAXDOP = ' + CAST(@maxdop AS nvarchar(10));
+
+		EXEC (@command);
+        PRINT N'Executed: ' + @command;
+
+	END	
+
+-- Закрытие курсора
+CLOSE tables;
+DEALLOCATE tables;
+
+-- Удаление временной таблицы
+DROP TABLE #tables;

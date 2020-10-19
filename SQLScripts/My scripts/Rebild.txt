@@ -1,0 +1,85 @@
+USE erp;                           -- устанавливаем текущую базу
+SET NOCOUNT ON;                    -- отключаем вывод количества возвращаемых строк, это несколько ускорит обработку
+DECLARE @objectid int;             -- ID объекта
+DECLARE @indexid int;              -- ID индекса
+DECLARE @partitioncount bigint;    -- количество секций если индекс секционирован
+DECLARE @schemaname nvarchar(130); -- имя схемы в которой находится таблица
+DECLARE @objectname nvarchar(130); -- имя таблицы 
+DECLARE @indexname nvarchar(130);  -- имя индекса
+DECLARE @partitionnum bigint;      -- номер секции
+DECLARE @frag float;               -- процент фрагментации индекса
+DECLARE @command nvarchar(4000);   -- инструкция T-SQL для дефрагментации либо ренидексации
+DECLARE @maxdop int;               -- число потоков
+
+SET @maxdop = 24; -- выставим не больше, чем ядер в одной NUMA ноде
+
+-- Отбор таблиц и индексов с помощью системного представления sys.dm_db_index_physical_stats
+-- Отбор только тех объектов которые являются индексами (index_id > 0), 
+SELECT
+    i.object_id AS objectid,
+    i.index_id AS indexid,
+    i.partition_number AS partitionnum,
+    i.avg_fragmentation_in_percent AS frag
+INTO #indexes
+FROM sys.dm_db_index_physical_stats (DB_ID(), NULL, NULL , NULL, 'LIMITED') i
+INNER JOIN sys.tables t
+ON i.object_id = t.object_id 
+WHERE i.index_id > 0;
+
+-- Объявление курсора для чтения секций
+DECLARE partitions CURSOR FOR SELECT * FROM #indexes;
+
+-- Открытие курсора
+OPEN partitions;
+
+-- Цикл по секциям
+WHILE (1=1)
+    BEGIN
+        FETCH NEXT
+           FROM partitions
+           INTO @objectid, @indexid, @partitionnum, @frag;
+        IF @@FETCH_STATUS < 0 BREAK;
+		
+-- Собираем имена объектов по ID		
+        SELECT @objectname = QUOTENAME(o.name), @schemaname = QUOTENAME(s.name)
+        FROM sys.objects AS o
+        JOIN sys.schemas as s ON s.schema_id = o.schema_id
+        WHERE o.object_id = @objectid;
+        SELECT @indexname = QUOTENAME(name)
+        FROM sys.indexes
+        WHERE  object_id = @objectid AND index_id = @indexid;
+        SELECT @partitioncount = count (*)
+        FROM sys.partitions
+        WHERE object_id = @objectid AND index_id = @indexid;
+
+-- Если фрагментация менее 10%, тогда просто обновление статистики по индексу
+-- Если фрагментация менее или равна 30% тогда дефрагментация, иначе реиндексация
+        
+		IF @frag > 10.0
+			BEGIN
+				IF @frag > 30.0
+					SET @command = N'ALTER INDEX ' + @indexname + N' ON ' + @schemaname + N'.' + @objectname + N' REBUILD';
+				IF @frag <= 30.0
+					SET @command = N'ALTER INDEX ' + @indexname + N' ON ' + @schemaname + N'.' + @objectname + N' REORGANIZE';
+				IF @partitioncount > 1
+					SET @command = @command + N' PARTITION = ' + CAST(@partitionnum AS nvarchar(10));
+
+				IF @frag > 30.0
+					SET @command = @command + N' WITH (MAXDOP = ' + CAST(@maxdop AS nvarchar(10)) + N')';
+				ELSE
+					SET @command = @command + N'; UPDATE STATISTICS ' + @schemaname + N'.' + @objectname + N' ' + @indexname + N' WITH FULLSCAN, MAXDOP = ' + CAST(@maxdop AS nvarchar(10));
+			END
+		ELSE
+			SET @command = N'UPDATE STATISTICS ' + @schemaname + N'.' + @objectname + N' ' + @indexname + N' WITH FULLSCAN, MAXDOP = ' + CAST(@maxdop AS nvarchar(10));
+			
+        EXEC (@command);
+        PRINT N'Executed: ' + @command;
+    END
+
+-- Закрытие курсора
+CLOSE partitions;
+DEALLOCATE partitions;
+
+-- Удаление временной таблицы
+DROP TABLE #indexes;
+GO

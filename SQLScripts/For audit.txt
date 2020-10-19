@@ -1,0 +1,48 @@
+
+DECLARE @DB_ID nvarchar(10);
+DECLARE @SQL nvarchar(max);
+SET @SQL = '';
+
+DECLARE cur CURSOR FOR SELECT CONVERT(nvarchar, database_id) from sys.databases WHERE database_id > 4
+OPEN cur
+FETCH NEXT FROM cur INTO @DB_ID
+
+WHILE @@FETCH_STATUS = 0
+	BEGIN
+    	  
+	IF (@SQL <> '') SET @SQL = @SQL + ' union all';
+
+	SET @SQL = @SQL + '   
+	select ''Имя базы'', DB_NAME(' + @DB_ID + ')
+	union all
+	select ''Размер файла данных'', cast((convert(bigint, size / 128.0 / 1024)) as nvarchar) + '' Гбайт'' from sys.master_files where database_id = ' + @DB_ID + ' and type_desc = ''ROWS''
+	union all
+	select ''Размер файла лога'', cast((convert(bigint, size / 128.0 / 1024)) as nvarchar) + '' Гбайт'' from sys.master_files where database_id = ' + @DB_ID + ' and type_desc = ''LOG''
+	union all
+	select ''Recovery model'', convert(varchar, recovery_model_desc) from sys.databases where database_id = ' + @DB_ID + '
+	union all
+	select ''Compatibility level'', convert(varchar, compatibility_level) from sys.databases where database_id = ' + @DB_ID + '
+	union all
+	select ''Auto Create Statistics'', convert(varchar, is_auto_create_stats_on) from sys.databases where database_id = ' + @DB_ID + '
+	union all
+	select ''Auto Update Statistics Asynchronously'', convert(varchar, is_auto_update_stats_async_on) from sys.databases where database_id = ' + @DB_ID + '
+	union all
+	select ''Delayed Durability'', convert(varchar, delayed_durability) from sys.databases where database_id = ' + @DB_ID + '
+	union all
+	select ''Read Committed Snapshot Isolation'', convert(varchar, is_read_committed_snapshot_on) from sys.databases where database_id = ' + @DB_ID + '
+	union all
+	select ''Snapshot isolation state'', convert(varchar, snapshot_isolation_state_desc) from sys.databases where database_id = ' + @DB_ID + '
+	union all        
+	select ''Рост файла данных'', convert(nvarchar, convert(bigint, growth / 128.0)) + '' Мбайт'' from sys.master_files where database_id = ' + @DB_ID + ' and type_desc = ''ROWS''
+	union all
+	select ''Рост файла лога'', convert(nvarchar, convert(bigint, growth / 128.0)) + '' Мбайт'' from sys.master_files where database_id = ' + @DB_ID + ' and type_desc = ''LOG''
+	union all
+	select '''', ''''';
+
+	FETCH NEXT FROM cur INTO @DB_ID
+	END
+   
+CLOSE cur
+DEALLOCATE cur
+
+EXEC (@SQL)
