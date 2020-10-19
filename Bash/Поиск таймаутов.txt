@@ -1,0 +1,11 @@
+1. Ищем все таймауты с выводом в файл.
+
+	egrep -r ',TTIMEOUT,' rphost*/*.log > ttimeouts.txt
+
+2. Берем таймаут из списка и ищем транзакцию жертвы. Подставляем путь к логу и t:connectID жертвы.
+
+	cat Locks/rphost_5468/20011410.log | sed -r 's/\xef\xbb\xbf//g' | perl -pe 's/^[0-9]+:.*,Context,.*Context=/,Context=/' | gawk -vORS='' '{if (match($0, "^[0-9]+:[0-9]+\\.")) print "\n"$0; else print $0}' | egrep --text ',(SDBL|TLOCK|TTIMEOUT),.*t:connectID=140.*((Begin|Commit|Rollback)Transaction|WaitConnections=[0-9]+)' | gawk -vORS='<LineBreak>' '{if (match($0, "^[0-9]+:[0-9]+\\..*BeginTransaction")) print "\n"$0; else print $0}' | egrep ',TLOCK,' | sed -r 's/<LineBreak>/\n/g' > temp.txt
+
+3. Найдя транзакцию жертвы, у нас есть t:connectID виновника и пространство блокировки. По ним ищем виновника. Для быстроты, можем сначала поискать в том же часе, в котором был таймаут.
+	
+	cat Locks/rphost*/*.log | sed -r 's/\xef\xbb\xbf//g' | perl -pe 's/^[0-9]+:.*,Context,.*Context=/,Context=/' | gawk -vORS='' '{if (match($0, "^[0-9]+:[0-9]+\\.")) print "\n"$0; else print $0}' | egrep --text ',(SDBL|TLOCK|TTIMEOUT),.*t:connectID=158447.*((Begin|Commit|Rollback)Transaction|Regions=InfoRg8834.DIMS)' | gawk -vORS='<LineBreak>' '{if (match($0, "^[0-9]+:[0-9]+\\..*BeginTransaction")) print "\n"$0; else print $0}' | egrep ',TLOCK,' | sed -r 's/<LineBreak>/\n/g' > temp2.txt

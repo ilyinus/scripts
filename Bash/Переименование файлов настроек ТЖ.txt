@@ -1,0 +1,1 @@
+for i in 1 12 36 35 18; do mv //m1-as$i/conf/logcfg.xml //m1-as$i/conf/logcfg.xml_ && mv //m1-as$i/conf/logcfg_pause.xml //m1-as$i/conf/logcfg.xml && mv //m1-as$i/conf/logcfg.xml_ //m1-as$i/conf/logcfg_pause.xml; done

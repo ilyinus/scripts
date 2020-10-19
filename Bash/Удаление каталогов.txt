@@ -1,0 +1,1 @@
+for i in 1 12 18 35 36; do rm -rf //m1-as$i/LogCUP_1C/For1C //m1-as$i/LogCUP_1C/OnlyTTIMEOUTs; done

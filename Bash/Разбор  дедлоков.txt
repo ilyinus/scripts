@@ -1,0 +1,13 @@
+1. Ищем события TDEADLOCK. Найдя, смотрим в свойство DeadlockConnectionInersections, в нем будет пара t:connectID проигравшего и победителя
+
+2. Открываем два окна GitBash и скриптами ищем транзакции, подставив нужный connectID и пространства
+
+find //D01sedfs03/ARCHIVES/TLOGS/SEDA1/19-07-24 -name '*.zip' -print0 |
+xargs -0 -i -n 1 unzip -c {} '*/ttimeout/rphost*/*.log' |
+sed -r 's/\xef\xbb\xbf//g' | gawk -vORS='' '{if (match($0, "^[0-9]+:[0-9]+\\.")) print "\n"$0; else print $0}' | egrep --text ',(SDBL|TLOCK|TDEADLOCK),.*t:connectID=489158.*((Begin|Commit|Rollback)Transaction|Reference86.REFLOCK|Reference124.REFLOCK)' | gawk -vORS='<LineBreak>' '{if (match($0, "^[0-9]+:[0-9]+\\..*BeginTransaction")) print "\n"$0; else print $0}' | egrep ',TLOCK,' | sed -r 's/<LineBreak>/\n/g' > temp.txt
+
+find //D01sedfs03/ARCHIVES/TLOGS/SEDA1/19-07-24 -name '*.zip' -print0 |
+xargs -0 -i -n 1 unzip -c {} '*/ttimeout/rphost*/*.log' |
+sed -r 's/\xef\xbb\xbf//g' | gawk -vORS='' '{if (match($0, "^[0-9]+:[0-9]+\\.")) print "\n"$0; else print $0}' | egrep --text ',(SDBL|TLOCK|TDEADLOCK),.*t:connectID=489086.*((Begin|Commit|Rollback)Transaction|Reference86.REFLOCK|Reference124.REFLOCK)' | gawk -vORS='<LineBreak>' '{if (match($0, "^[0-9]+:[0-9]+\\..*BeginTransaction")) print "\n"$0; else print $0}' | egrep ',TLOCK,' | sed -r 's/<LineBreak>/\n/g' > temp2.txt
+
+3. Закидываем в Excel для удобства и анализируем

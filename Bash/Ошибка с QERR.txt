@@ -1,0 +1,1 @@
+cat Errors/rphost*/190517*.log |  gawk -vORS="<LineBreak>" '{if (match($0, "^[0-9]+:[0-9]+")) print "\n"$0;else print $0}' | egrep ',QERR,.*BackgroundJob.*Cannot continue the execution because the session'| sed -r 's/<LineBreak>/\n/g' > QERR.txt 

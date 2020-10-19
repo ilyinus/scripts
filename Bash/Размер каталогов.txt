@@ -1,0 +1,1 @@
+clear; for i in 1 12 18 35 36; do du -sh //m1-as$i/LogCUP_1C/For1C; done
