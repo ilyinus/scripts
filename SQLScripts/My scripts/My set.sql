@@ -210,12 +210,12 @@ CREATE TABLE [dbo].[CL_WMS](
 	[name] [nvarchar](50) NULL,
 	[timestamp] [datetime2] NULL,
 	[database_name] [nvarchar](50) NULL,
-	[cpu_time] [int] NOT NULL,
-	[duration] [int] NOT NULL,
-	[logical_reads] [int] NOT NULL,
-	[physical_reads] [int] NOT NULL,
-	[writes] [int] NOT NULL,
-	[row_count] [int] NOT NULL,
+	[cpu_time] [bigint] NOT NULL,
+	[duration] [bigint] NOT NULL,
+	[logical_reads] [bigint] NOT NULL,
+	[physical_reads] [bigint] NOT NULL,
+	[writes] [bigint] NOT NULL,
+	[row_count] [bigint] NOT NULL,
 	[sql_text] [nvarchar](max) NOT NULL,
 	[hash] [nvarchar](4000) NULL)
 END;
