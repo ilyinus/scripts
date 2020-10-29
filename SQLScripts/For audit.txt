@@ -12,7 +12,9 @@ WHILE @@FETCH_STATUS = 0
     	  
 	IF (@SQL <> '') SET @SQL = @SQL + ' union all';
 
-	SET @SQL = @SQL + '   
+	SET @SQL = @SQL + '
+	select ''ID'', ''' + @DB_ID + '''
+	union all 	
 	select ''Имя базы'', DB_NAME(' + @DB_ID + ')
 	union all
 	select ''Размер файла данных'', cast((convert(bigint, size / 128.0 / 1024)) as nvarchar) + '' Гбайт'' from sys.master_files where database_id = ' + @DB_ID + ' and type_desc = ''ROWS''
