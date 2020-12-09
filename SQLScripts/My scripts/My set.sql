@@ -217,7 +217,8 @@ CREATE TABLE [dbo].[CL_WMS](
 	[writes] [bigint] NOT NULL,
 	[row_count] [bigint] NOT NULL,
 	[sql_text] [nvarchar](max) NOT NULL,
-	[hash] [nvarchar](4000) NULL)
+	[sql_normalize] [nvarchar](4000) NULL)
+ALTER TABLE [CL_WMS] ADD checksum AS CHECKSUM(sql_normalize)
 END;
 
 insert into CL_WMS
@@ -238,7 +239,7 @@ SELECT
 		else
 			event_data_XML.value('(event/data[@name="sql_text"]/value)[1]' ,'VARCHAR(max)')
 	end                                                                                       AS sql_text,
-	''                                                                                        AS hash
+	''                                                                                        AS sql_normalize
 FROM
 (SELECT CAST(event_data AS XML) event_data_XML, object_name
 FROM sys.fn_xe_file_target_read_file ('C:\Работа\CL\Queries_0_132083914529730000.xel', NULL, NULL, NULL)) T 
@@ -287,7 +288,7 @@ return(left(@TSQL, 4000));
 end;
 go
 
-UPDATE CL_WMS SET hash = dbo.fn_GetSQLHash(sql_text) WHERE hash = ''
+UPDATE CL_WMS SET sql_normalize = dbo.fn_GetSQLHash(sql_text) WHERE sql_normalize = ''
 
 drop function dbo.fn_GetSQLHash
 
@@ -315,8 +316,8 @@ end;
 
 --Нагрузка в разрезе баз
 
-with CTE (database_name, duration, cpu_time, logical_reads, writes, physical_reads, row_count, hash)
-AS (SELECT database_name, duration, cast(cpu_time as bigint), logical_reads, writes, physical_reads, row_count, hash FROM NESTRO_Queries)
+with CTE (database_name, duration, cpu_time, logical_reads, writes, physical_reads, row_count)
+AS (SELECT database_name, duration, cast(cpu_time as bigint), logical_reads, writes, physical_reads, row_count FROM NESTRO_Queries)
 
 SELECT
 database_name,
@@ -331,8 +332,8 @@ order by [Reads (%)] desc
 
 --Просмотреть таблицу можно например так
 
-with CTE (database_name, duration, cpu_time, logical_reads, writes, physical_reads, row_count, hash)
-AS (SELECT database_name, duration, cpu_time, logical_reads, writes, physical_reads, row_count, hash FROM NESTRO_Queries)
+with CTE (database_name, duration, cpu_time, logical_reads, writes, physical_reads, row_count, sql_normalize)
+AS (SELECT database_name, duration, cpu_time, logical_reads, writes, physical_reads, row_count, sql_normalize FROM NESTRO_Queries)
 
 SELECT TOP 20
 database_name DB,
@@ -348,10 +349,11 @@ cast(cast(sum(Logical_reads/128) as decimal(15, 2)) / iq.TotalReads * 100 as dec
 sum(writes/128) [Writes (Mb)],
 sum(physical_reads/128) [Ph Reads (Mb)],
 sum(row_count) Rows,
-cast('' as xml).query('sql:column("hash")') SqlText
+cast('' as xml).query('sql:column("sql_normalize")') SqlText,
+checksum
 FROM CTE
 join (select sum(logical_reads/128) TotalReads from CTE) iq on 1=1
-group by Hash, database_name, iq.TotalReads order by [Reads (%)] desc
+group by sql_normalize, checksum, database_name, iq.TotalReads order by [Reads (%)] desc
 
 --ЗАГРУЗКА ТРАССЫ xEvent (для statement)
 
